@@ -246,6 +246,14 @@ class MessageEvent(Event):
         return 0.0
 
 
+class AlwaysEvent(Event):
+    def __init__(self, *args):
+        super().__init__(*args)
+
+    def check(self, env, previous_observation, action, observation) -> float:
+        return self._set_achieved()
+
+
 class AbstractRewardManager(ABC):
     """This is the abstract base class for the ``RewardManager`` that is used
     for defining custom reward functions.
@@ -859,3 +867,48 @@ class GroupedRewardManager(AbstractRewardManager):
         self._reward = 0.0
         for reward_manager in self.reward_managers:
             reward_manager.reset()
+
+
+class IntersectionRewardManager(RewardManager):
+    """
+    Requires every event to be completed (in any order) and will only give
+    reward when all events are completed.
+    Ignores terminal_required and terminal_sufficient.
+    """
+
+    def __init__(self):
+        super().__init__()
+
+        self._stored_reward = 0
+        self._reward = 0
+
+    def check_episode_end_call(
+        self, env, previous_observation, action, observation
+    ) -> bool:
+
+        reward = 0.0
+        for event in self.events:
+            if event.achieved:
+                continue
+            reward += event.check(env, previous_observation, action, observation)
+
+        self._stored_reward += reward
+
+        completed = self._check_complete()
+        if completed:
+            self._reward = self._stored_reward
+
+        return completed
+
+    def _check_complete(self) -> bool:
+        result = True
+        for event in self.events:
+            # We require all events to be completed
+            if not event.achieved:
+                result = False
+
+        return result
+
+    def reset(self):
+        super().reset()
+        self._stored_reward = 0.0
