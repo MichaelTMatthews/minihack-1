@@ -27,7 +27,12 @@ import minihack.envs.skills_levitate
 import minihack.envs.skills_freeze
 import minihack.envs.skills_lava
 import minihack.envs.skills_quest
-
+import minihack.envs.skill_transfer.skills_all
+import minihack.envs.skill_transfer.task_mimic
+import minihack.envs.skill_transfer.task_simple
+import minihack.envs.skill_transfer.task_medusa
+import minihack.envs.skill_transfer.task_lavacross
+import minihack.envs.skill_transfer.task_seamonsters
 __all__ = [
     "MiniHack",
     "MiniHackNavigation",

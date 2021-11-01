@@ -504,93 +504,93 @@ class MiniHackSkillZapDeathWand(MiniHackSkillTransfer):
 
 registration.register(
     id="MiniHack-Skill-ApplyFrostHorn-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillApplyFrostHorn",
 )
 
 registration.register(
     id="MiniHack-Skill-Eat-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillEat",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillEat",
 )
 
 registration.register(
     id="MiniHack-Skill-Fight-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillFight",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillFight",
 )
 
 registration.register(
     id="MiniHack-Skill-NavigateBlind-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillNavigateBlind",
 )
 
 registration.register(
     id="MiniHack-Skill-NavigateLava-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillNavigateLava",
 )
 
 registration.register(
     id="MiniHack-Skill-NavigateLavaToAmulet-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillNavigateLavaToAmulet",
 )
 
 registration.register(
     id="MiniHack-Skill-NavigateOverLava-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillNavigateOverLava",
 )
 
 registration.register(
     id="MiniHack-Skill-NavigateWater-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillNavigateWater",
 )
 
 registration.register(
     id="MiniHack-Skill-PickUp-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPickUp",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPickUp",
 )
 
 registration.register(
     id="MiniHack-Skill-PutOn-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPutOn",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPutOn",
 )
 
 registration.register(
     id="MiniHack-Skill-TakeOff-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillTakeOff",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillTakeOff",
 )
 
 registration.register(
     id="MiniHack-Skill-Throw-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillThrow",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillThrow",
 )
 
 registration.register(
     id="MiniHack-Skill-Unlock-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillUnlock",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillUnlock",
 )
 
 registration.register(
     id="MiniHack-Skill-Wear-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillWear",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillWear",
 )
 
 registration.register(
     id="MiniHack-Skill-Wield-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:" "MiniHackSkillWield",
+    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillWield",
 )
 
 registration.register(
     id="MiniHack-Skill-ZapColdWand-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillZapColdWand",
 )
 
 registration.register(
     id="MiniHack-Skill-ZapWoD-v0",
-    entry_point="nle.minihack.envs.skill_transfer.skills_all:"
+    entry_point="minihack.envs.skill_transfer.skills_all:"
     "MiniHackSkillZapDeathWand",
 )

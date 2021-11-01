@@ -274,43 +274,43 @@ class MiniHackSimpleUnionIC(MiniHackIC):
 
 registration.register(
     id="MiniHack-SimpleSeq-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleSeq",
+    entry_point="minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleSeq",
 )
 
 registration.register(
     id="MiniHack-SimpleSeq-IC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleSeqIC",
+    entry_point="minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleSeqIC",
 )
 
 registration.register(
     id="MiniHack-SimpleIntersection-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:"
+    entry_point="minihack.envs.skill_transfer.task_simple:"
     "MiniHackSimpleIntersection",
 )
 
 registration.register(
     id="MiniHack-SimpleIntersectionIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:"
+    entry_point="minihack.envs.skill_transfer.task_simple:"
     "MiniHackSimpleIntersectionIC",
 )
 
 registration.register(
     id="MiniHack-SimpleRandom-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleRandom",
+    entry_point="minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleRandom",
 )
 
 registration.register(
     id="MiniHack-SimpleRandomIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:"
+    entry_point="minihack.envs.skill_transfer.task_simple:"
     "MiniHackSimpleRandomIC",
 )
 
 registration.register(
     id="MiniHack-SimpleUnion-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleUnion",
+    entry_point="minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleUnion",
 )
 
 registration.register(
     id="MiniHack-SimpleUnionIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleUnionIC",
+    entry_point="minihack.envs.skill_transfer.task_simple:" "MiniHackSimpleUnionIC",
 )

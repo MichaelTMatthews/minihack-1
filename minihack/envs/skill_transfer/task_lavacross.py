@@ -63,10 +63,10 @@ class MiniHackLCFreezeIC(MiniHackIC):
 
 registration.register(
     id="MiniHack-LavaCrossFreeze-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_lavacross:" "MiniHackLCFreeze",
+    entry_point="minihack.envs.skill_transfer.task_lavacross:" "MiniHackLCFreeze",
 )
 
 registration.register(
     id="MiniHack-LavaCrossFreezeIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_lavacross:" "MiniHackLCFreezeIC",
+    entry_point="minihack.envs.skill_transfer.task_lavacross:" "MiniHackLCFreezeIC",
 )

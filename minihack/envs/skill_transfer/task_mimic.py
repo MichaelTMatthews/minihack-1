@@ -99,10 +99,10 @@ class MiniHackMimicIC(MiniHackIC):
 
 registration.register(
     id="MiniHack-Mimic-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_mimic:" "MiniHackMimic",
+    entry_point="minihack.envs.skill_transfer.task_mimic:" "MiniHackMimic",
 )
 
 registration.register(
     id="MiniHack-MimicIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_mimic:" "MiniHackMimicIC",
+    entry_point="minihack.envs.skill_transfer.task_mimic:" "MiniHackMimicIC",
 )

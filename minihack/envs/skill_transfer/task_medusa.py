@@ -63,10 +63,10 @@ class MiniHackMedusaIC(MiniHackIC):
 
 registration.register(
     id="MiniHack-Medusa-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_medusa:" "MiniHackMedusa",
+    entry_point="minihack.envs.skill_transfer.task_medusa:" "MiniHackMedusa",
 )
 
 registration.register(
     id="MiniHack-MedusaIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_medusa:" "MiniHackMedusaIC",
+    entry_point="minihack.envs.skill_transfer.task_medusa:" "MiniHackMedusaIC",
 )

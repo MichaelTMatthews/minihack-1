@@ -82,12 +82,12 @@ class MiniHackSeaMonstersIC(MiniHackIC):
 
 registration.register(
     id="MiniHack-SeaMonsters-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_seamonsters:"
+    entry_point="minihack.envs.skill_transfer.task_seamonsters:"
     "MiniHackSeaMonsters",
 )
 
 registration.register(
     id="MiniHack-SeaMonstersIC-v0",
-    entry_point="nle.minihack.envs.skill_transfer.task_seamonsters:"
+    entry_point="minihack.envs.skill_transfer.task_seamonsters:"
     "MiniHackSeaMonstersIC",
 )
