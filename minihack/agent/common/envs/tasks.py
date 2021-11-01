@@ -1,8 +1,13 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 
 import threading
+
 from nle.env import tasks as nle_tasks
+
 from minihack import MiniHack
+from minihack.agent.common.envs.wrapper import (
+    CounterWrapper,
+)
 from minihack.envs import (
     corridor,
     keyroom,
@@ -20,12 +25,8 @@ from minihack.envs import (
     skills_wod,
     skills_quest,
 )
-from minihack.agent.common.envs.wrapper import (
-    CounterWrapper,
-    CropWrapper,
-    PrevWrapper,
-)
-
+from minihack.envs.skill_transfer import skills_all, task_lavacross, task_medusa, task_mimic, task_seamonsters, \
+    task_simple
 
 ENVS = dict(
     # NLE tasks
@@ -154,6 +155,42 @@ ENVS = dict(
     quest_easy=skills_quest.MiniHackQuestEasy,
     quest_medium=skills_quest.MiniHackQuestMedium,
     quest_hard=skills_quest.MiniHackQuestHard,
+    # Skill Transfer Skills
+    mini_skill_apply_frost_horn=skills_all.MiniHackSkillApplyFrostHorn,
+    mini_skill_eat=skills_all.MiniHackSkillEat,
+    mini_skill_fight=skills_all.MiniHackSkillFight,
+    mini_skill_nav_blind=skills_all.MiniHackSkillNavigateBlind,
+    mini_skill_nav_lava=skills_all.MiniHackSkillNavigateLava,
+    mini_skill_nav_lava_to_amulet=skills_all.MiniHackSkillNavigateLavaToAmulet,
+    mini_skill_nav_over_lava=skills_all.MiniHackSkillNavigateOverLava,
+    mini_skill_nav_water=skills_all.MiniHackSkillNavigateWater,
+    mini_skill_pick_up=skills_all.MiniHackSkillPickUp,
+    mini_skill_put_on=skills_all.MiniHackSkillPutOn,
+    mini_skill_take_off=skills_all.MiniHackSkillTakeOff,
+    mini_skill_throw=skills_all.MiniHackSkillThrow,
+    mini_skill_unlock=skills_all.MiniHackSkillUnlock,
+    mini_skill_wear=skills_all.MiniHackSkillWear,
+    mini_skill_wield=skills_all.MiniHackSkillWield,
+    mini_skill_zap_cold=skills_all.MiniHackSkillZapColdWand,
+    mini_skill_zap_death=skills_all.MiniHackSkillZapDeathWand,
+    # Skill Transfer Tasks
+    mini_lc_freeze=task_lavacross.MiniHackLCFreeze,
+    mini_medusa=task_medusa.MiniHackMedusa,
+    mini_mimic=task_mimic.MiniHackMimic,
+    mini_seamonsters=task_seamonsters.MiniHackSeaMonsters,
+    mini_simple_seq=task_simple.MiniHackSimpleSeq,
+    mini_simple_intersection=task_simple.MiniHackSimpleIntersection,
+    mini_simple_union=task_simple.MiniHackSimpleUnion,
+    mini_simple_random=task_simple.MiniHackSimpleRandom,
+    # Skill Transfer Interleaved Curriculum
+    mini_simple_seq_ic=task_simple.MiniHackSimpleSeqIC,
+    mini_simple_intersection_ic=task_simple.MiniHackSimpleIntersectionIC,
+    mini_simple_random_ic=task_simple.MiniHackSimpleRandomIC,
+    mini_simple_union_ic=task_simple.MiniHackSimpleUnionIC,
+    mini_lc_freeze_ic=task_lavacross.MiniHackLCFreeze,
+    mini_mimic_ic=task_mimic.MiniHackMimicIC,
+    mini_seamonsters_ic=task_seamonsters.MiniHackSeaMonstersIC,
+    mini_medusa_ic=task_medusa.MiniHackMedusaIC,
 )
 
 
