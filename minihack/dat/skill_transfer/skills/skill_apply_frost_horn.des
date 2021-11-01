@@ -1,0 +1,18 @@
+MAZE: "mylevel",' '
+INIT_MAP:solidfill,' '
+GEOMETRY:center,center
+MAP
+-------------
+|........LLL|
+|........LLL|
+|........LLL|
+|........LLL|
+|........LLL|
+-------------
+ENDMAP
+REGION:(0,0,12,6),lit,"ordinary"
+$all_map = selection:fillrect (1,1,11,5)
+$right = selection:fillrect (11,1,11,5)
+# TERRAIN:rndcoord($right), 'L'
+BRANCH:(2,2,2,2),(0,0,0,0)
+OBJECT:('(',"frost horn"),(2,2),blessed
