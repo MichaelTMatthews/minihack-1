@@ -1,0 +1,6 @@
+{
+  "mini_simple_seq" : ["mini_skill_pick_up", "mini_skill_wield", "mini_skill_fight"],
+  "mini_simple_intersection" : ["skill_pick_up", "skill_wear", "skill_eat"],
+  "mini_simple_union" : ["skill_pick_up", "skill_zap_wod", "skill_throw"],
+  "mini_simple_random" : ["skill_pick_up", "skill_unlock", "skill_navigate_lava", "skill_put_on", "skill_navigate_over_lava"]
+}
