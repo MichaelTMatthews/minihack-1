@@ -167,6 +167,9 @@ def inference(
                         core_outputs["action"],
                         core_outputs["policy_logits"],
                         core_outputs["baseline"],
+                        core_outputs["chosen_option"],
+                        core_outputs["teacher_logits"],
+                        core_outputs["pot_sm"],
                     )
                 ),
                 agent_state,
@@ -222,9 +225,20 @@ def learn(
 
         output, _ = model(observation, initial_agent_state, learning=True)
 
+        if flags.model == "foc":
+            # chosen_option
+            output["action"] = output["chosen_option"]
+
         # Use last baseline value (from the value function) to bootstrap.
         learner_outputs = AgentOutput._make(
-            (output["action"], output["policy_logits"], output["baseline"])
+            (
+                output["action"],
+                output["policy_logits"],
+                output["baseline"],
+                output["chosen_option"],
+                output["teacher_logits"],
+                output["pot_sm"],
+            )
         )
 
         # At this point, the environment outputs at time step `t` are the inputs
@@ -242,6 +256,28 @@ def learn(
         env_outputs = EnvOutput._make(env_outputs)
         actor_outputs = AgentOutput._make(actor_outputs)
         learner_outputs = AgentOutput._make(learner_outputs)
+
+        if flags.model == "foc":
+            actor_outputs = AgentOutput._make(
+                (
+                    actor_outputs.chosen_option,
+                    actor_outputs.policy_logits,
+                    actor_outputs.baseline,
+                    actor_outputs.chosen_option,
+                    actor_outputs.teacher_logits,
+                    actor_outputs.pot_sm,
+                )
+            )
+            learner_outputs = AgentOutput._make(
+                (
+                    learner_outputs.chosen_option,
+                    learner_outputs.policy_logits,
+                    learner_outputs.baseline,
+                    learner_outputs.chosen_option,
+                    learner_outputs.teacher_logits,
+                    learner_outputs.pot_sm,
+                )
+            )
 
         rewards = env_outputs.rewards
         if flags.normalize_reward:
@@ -364,7 +400,7 @@ def learn(
 
         # TWO-HEADED INTRINSIC REWARDS / LOSSES
         if calculate_intrinsic and (flags.int.twoheaded or flags.no_extrinsic):
-            # here we calculate RL loss on the int reward using its own value head
+            # here we calculate RL loss on the intrinsic reward using its own value head
             # 1) twoheaded always separates ext and int rewards to their own heads
             # 2) no_extrinsic skips the ext value head and uses only the int one
             int_clipped_rewards = clip(flags, intrinsic_reward)
@@ -409,8 +445,37 @@ def learn(
 
             total_loss += int_pg_loss + int_baseline_loss
 
+        # KICKSTARTING LOSS
+        ks_loss = 0
+        if flags.model in ["ks", "hks"]:
+            timestep = (
+                stats.get("step", 0) + flags.unroll_length * flags.batch_size
+            )
+
+            if timestep < flags.ks_max_time:
+                lam = flags.ks_max_lambda * max(
+                    (1 - timestep / flags.ks_max_time),
+                    flags.ks_min_lambda_prop,
+                )
+            else:
+                lam = flags.ks_min_lambda_prop * flags.ks_max_lambda
+
+            teacher_log_probs = torch.log(learner_outputs.teacher_logits)
+            policy_log_probs = torch.log_softmax(
+                learner_outputs.policy_logits, 2
+            )
+
+            ks_loss = lam * nn.KLDivLoss(
+                log_target=True, reduction="batchmean"
+            )(teacher_log_probs, policy_log_probs)
+
+            print("~", timestep, "total_loss", total_loss, "ks_loss", ks_loss)
+
+            total_loss += ks_loss
+
         # BACKWARD STEP
         optimizer.zero_grad()
+
         total_loss.backward()
         if flags.grad_norm_clipping > 0:
             nn.utils.clip_grad_norm_(
@@ -422,6 +487,46 @@ def learn(
         actor_model.load_state_dict(model.state_dict())
 
         # LOGGING
+        # episode_rewards = env_outputs.rewards
+        # print('!', episode_rewards)
+        # print('?', env_outputs.episode_return)
+        # print('@', env_outputs.done)
+
+        # Success rate
+
+        done_masked = env_outputs.done.cpu()
+        done_masked[0, :] = False
+
+        false_fill = torch.zeros((1, done_masked.shape[1]), dtype=torch.bool)
+        done_m1 = torch.cat((done_masked[1:, :], false_fill), dim=0)
+
+        masked_returns = env_outputs.episode_return[done_masked]
+        masked_returns_m1 = env_outputs.episode_return[done_m1]
+
+        diff = masked_returns - masked_returns_m1
+        n_wins = len(diff[diff > 0.5])
+        n_losses = len(diff[diff < -0.5])
+
+        if n_wins + n_losses != len(diff):
+            print("Invalid runs, some did not end in a win or a loss:")
+            print(diff)
+
+        if len(diff) == 0:
+            success_rate = None
+        else:
+            success_rate = n_wins / len(diff)
+        stats["success_rate"] = success_rate
+
+        # Meta network entropy
+
+        if flags.model in ["hks"]:
+            meta_sm = actor_outputs.pot_sm
+            entropies = -(meta_sm * torch.log(meta_sm)).sum(dim=2)
+            avg_entropy = torch.mean(entropies)
+
+            stats["meta_entropy"] = avg_entropy
+
+        # Other stats
         episode_returns = env_outputs.episode_return[env_outputs.done]
         stats["step"] = (
             stats.get("step", 0) + flags.unroll_length * flags.batch_size
@@ -489,6 +594,7 @@ def learn(
 
         # Only logging if at least one episode was finished
         if len(episode_returns):
+            # TODO: log also SPS
             plogger.log(stats)
             if flags.wandb:
                 wandb.log(stats, step=stats["step"])

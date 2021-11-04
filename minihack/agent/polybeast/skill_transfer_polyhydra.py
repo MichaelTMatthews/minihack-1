@@ -20,56 +20,76 @@ def main(flags: DictConfig):
         print("Exiting...")
         return
 
-    with open(
-        "../../../minihack/dat/skill_transfer/tasks/tasks.json"
-    ) as tasks_json:
-        tasks = json.load(tasks_json)
+    if flags.model in ["foc", "ks", "hks"]:
+        with open(
+            "../../../minihack/dat/skill_transfer/tasks/tasks.json"
+        ) as tasks_json:
+            tasks = json.load(tasks_json)
 
-        if flags.env in tasks.keys():
-            skills = tasks[flags.env]
+            if flags.env in tasks.keys():
+                skills = tasks[flags.env]
 
-            for skill in skills:
-                skill_dir = st_home + "/" + skill + ".tar"
+                skill_dirs = [
+                    (st_home + "/" + skill + ".tar") for skill in skills
+                ]
 
-                if not os.path.isfile(skill_dir):
-                    print(
-                        "Required skill",
-                        skill,
-                        "not found in SKILL_TRANSFER_HOME, training "
-                        "an agent for this skill first.",
-                    )
+                for i, skill in enumerate(skills):
+                    skill_dir = skill_dirs[i]
 
-                    skill_flags = flags.copy()
-                    skill_flags.env = skill
-                    skill_flags.use_lstm = False
-                    skill_flags.total_steps = 1e3
-                    skill_flags.wandb = False
-                    skill_flags.model = 'baseline'
+                    if not os.path.isfile(skill_dir):
+                        print(
+                            "Required skill",
+                            skill,
+                            "not found in SKILL_TRANSFER_HOME, training "
+                            "an agent for this skill first.",
+                        )
 
-                    polyhydra.main(skill_flags)
+                        skill_flags = flags.copy()
+                        skill_flags.env = skill
+                        skill_flags.use_lstm = False
+                        skill_flags.total_steps = 1e3
+                        skill_flags.wandb = False
+                        skill_flags.model = "baseline"
 
-                    print("Finished training skill", skill)
-                    print("Copying network to SKILL_TRANSFER_HOME")
+                        polyhydra.main(skill_flags)
 
-                    shutil.copyfile("checkpoint.tar", skill_dir)
+                        print("Finished training skill", skill)
+                        print("Copying network to SKILL_TRANSFER_HOME")
 
-                    print("Network copied, deleting saves.")
+                        shutil.copyfile("checkpoint.tar", skill_dir)
 
-                    for filename in os.listdir("."):
-                        file_path = os.path.join(".", filename)
-                        try:
-                            if os.path.isfile(file_path) or os.path.islink(file_path):
-                                os.unlink(file_path)
-                            elif os.path.isdir(file_path):
-                                shutil.rmtree(file_path)
-                        except Exception as e:
-                            print("Failed to delete %s. Reason: %s" % (file_path, e))
+                        print("Network copied, deleting saves.")
 
-            print("All skills present, begin training on task.")
+                        for filename in os.listdir("."):
+                            file_path = os.path.join(".", filename)
+                            try:
+                                if os.path.isfile(file_path) or os.path.islink(
+                                    file_path
+                                ):
+                                    os.unlink(file_path)
+                                elif os.path.isdir(file_path):
+                                    shutil.rmtree(file_path)
+                            except Exception as e:
+                                print(
+                                    "Failed to delete %s. Reason: %s"
+                                    % (file_path, e)
+                                )
 
-        else:
-            print("Task not found in tasks.json")
-            print("Training without skills...")
+                print("All skills present, begin training on task.")
+
+                if flags.model == "foc":
+                    flags.foc_options_path = skill_dirs
+                    flags.foc_options_config_path = [
+                        st_home + "/option_config.yaml"
+                        for _ in range(len(skill_dirs))
+                    ]
+
+            else:
+                print("Task not found in tasks.json")
+                print("Training without skills...")
+    else:
+        print("Model", flags.model, "does not use skills")
+        print("Training without skills...")
 
     polyhydra.main(flags)
 

@@ -30,7 +30,8 @@ NUM_CHARS = 256
 
 class NetHackNet(nn.Module):
     AgentOutput = collections.namedtuple(
-        "AgentOutput", "action policy_logits baseline"
+        "AgentOutput",
+        "action policy_logits baseline chosen_option teacher_logits pot_sm",
     )
 
     def __init__(self):
@@ -111,7 +112,12 @@ class RandomNet(NetHackNet):
         policy_logits = policy_logits.view(T, B, self.num_actions)
         return (
             dict(
-                policy_logits=policy_logits, baseline=baseline, action=action
+                policy_logits=policy_logits,
+                baseline=baseline,
+                action=action,
+                chosen_option=policy_logits,
+                teacher_logits=policy_logits,
+                pot_sm=policy_logits,
             ),
             core_state,
         )
@@ -564,6 +570,11 @@ class BaseNet(NetHackNet):
         action = action.view(T, B)
 
         output = dict(
-            policy_logits=policy_logits, baseline=baseline, action=action
+            policy_logits=policy_logits,
+            baseline=baseline,
+            action=action,
+            chosen_option=policy_logits,
+            teacher_logits=policy_logits,
+            pot_sm=policy_logits,
         )
         return (output, core_state)
