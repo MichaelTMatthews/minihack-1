@@ -46,6 +46,9 @@ foc_options_path: none
 foc_options_config_path: none
 teacher_path: none
 teacher_config_path: none
+ks_max_lambda: 10
+ks_max_time: 1e6
+ks_min_lambda_prop: 0.1
 
 # Polybeast settings
 mock: false

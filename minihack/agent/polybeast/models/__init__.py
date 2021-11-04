@@ -15,8 +15,11 @@
 from minihack.agent.common.envs import tasks
 from minihack.agent.polybeast.models.base import BaseNet, RandomNet
 from minihack.agent.polybeast.models.frozen_optioncritic import FOCNet
+from minihack.agent.polybeast.models.hks import HKSNet
 from minihack.agent.polybeast.models.intrinsic import RNDNet, RIDENet
 from nle.env.base import DUNGEON_SHAPE
+
+from minihack.agent.polybeast.models.kickstarting import KSNet
 
 
 def create_model(flags, device):
@@ -31,6 +34,10 @@ def create_model(flags, device):
         model_cls = RIDENet
     elif model_string == "foc":
         model_cls = FOCNet
+    elif model_string == "ks":
+        model_cls = KSNet
+    elif model_string == "hks":
+        model_cls = HKSNet
     elif model_string == "cnn" or model_string == "transformer":
         raise RuntimeError(
             "model=%s deprecated, use model=baseline crop_model=%s instead"
