@@ -47,7 +47,7 @@ def main(flags: DictConfig):
                         skill_flags = flags.copy()
                         skill_flags.env = skill
                         skill_flags.use_lstm = False
-                        skill_flags.total_steps = 1e3
+                        skill_flags.total_steps = 1e7
                         skill_flags.wandb = False
                         skill_flags.model = "baseline"
 
