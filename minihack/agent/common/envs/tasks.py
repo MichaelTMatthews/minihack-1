@@ -25,8 +25,14 @@ from minihack.envs import (
     skills_wod,
     skills_quest,
 )
-from minihack.envs.skill_transfer import skills_all, task_lavacross, task_medusa, task_mimic, task_seamonsters, \
-    task_simple
+from minihack.envs.skill_transfer import (
+    skills_all,
+    task_lavacross,
+    task_medusa,
+    task_mimic,
+    task_seamonsters,
+    task_simple,
+)
 
 ENVS = dict(
     # NLE tasks
@@ -182,15 +188,6 @@ ENVS = dict(
     mini_simple_intersection=task_simple.MiniHackSimpleIntersection,
     mini_simple_union=task_simple.MiniHackSimpleUnion,
     mini_simple_random=task_simple.MiniHackSimpleRandom,
-    # Skill Transfer Interleaved Curriculum
-    mini_simple_seq_ic=task_simple.MiniHackSimpleSeqIC,
-    mini_simple_intersection_ic=task_simple.MiniHackSimpleIntersectionIC,
-    mini_simple_random_ic=task_simple.MiniHackSimpleRandomIC,
-    mini_simple_union_ic=task_simple.MiniHackSimpleUnionIC,
-    mini_lc_freeze_ic=task_lavacross.MiniHackLCFreeze,
-    mini_mimic_ic=task_mimic.MiniHackMimicIC,
-    mini_seamonsters_ic=task_seamonsters.MiniHackSeaMonstersIC,
-    mini_medusa_ic=task_medusa.MiniHackMedusaIC,
 )
 
 
