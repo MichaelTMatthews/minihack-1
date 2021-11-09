@@ -80,14 +80,14 @@ def main(flags: DictConfig):
                 if flags.model in ["foc", "hks"]:
                     flags.foc_options_path = skill_dirs
                     flags.foc_options_config_path = [
-                        st_home + "/option_config.yaml"
+                        st_home + "/skill_config.yaml"
                         for _ in range(len(skill_dirs))
                     ]
 
                 elif flags.model == "ks":
                     flags.teacher_path = skill_dirs
                     flags.teacher_config_path = [
-                        st_home + "/option_config.yaml"
+                        st_home + "/skill_config.yaml"
                         for _ in range(len(skill_dirs))
                     ]
 
