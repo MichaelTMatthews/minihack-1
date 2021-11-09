@@ -10,9 +10,6 @@ class MiniHackSkillTransfer(MiniHackSkill):
             **kwargs,
         )
 
-
-
-
     def _reward_fn(self, last_observation, action, observation, end_status):
         """Use reward_manager to collect reward calculated in _is_episode_end,
         or revert to standard sparse reward."""

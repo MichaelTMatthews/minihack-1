@@ -4,7 +4,9 @@ from nle import nethack
 from nle.nethack import Command
 
 from minihack import RewardManager
-from minihack.envs.skill_transfer.mini_skill_transfer import MiniHackSkillTransfer
+from minihack.envs.skill_transfer.mini_skill_transfer import (
+    MiniHackSkillTransfer,
+)
 from minihack.reward_manager import AlwaysEvent
 
 MOVE_ACTIONS = tuple(nethack.CompassDirection)
@@ -105,18 +107,22 @@ RING_PREFIXES = [
 
 
 def a_or_an(adj):
-    if adj == "uranium":  # ...
+    if adj == "uranium":  # Phonetically starts with a constenant
         return "a"
     if adj[0] in ["a", "e", "i", "o", "u"]:
         return "an"
     return "a"
 
 
-WAND_NAMES = [("- " + a_or_an(pref) + " " + pref + " wand") for pref in WAND_PREFIXES]
+WAND_NAMES = [
+    ("- " + a_or_an(pref) + " " + pref + " wand") for pref in WAND_PREFIXES
+]
 AMULET_NAMES = [
     ("- " + a_or_an(pref) + " " + pref + " amulet") for pref in AMULET_PREFIXES
 ]
-RING_NAMES = [("- " + a_or_an(pref) + " " + pref + " ring") for pref in RING_PREFIXES]
+RING_NAMES = [
+    ("- " + a_or_an(pref) + " " + pref + " ring") for pref in RING_PREFIXES
+]
 
 
 class MiniHackSkillApplyFrostHorn(MiniHackSkillTransfer):
@@ -161,7 +167,11 @@ class MiniHackSkillFight(MiniHackSkillTransfer):
 
         reward_manager = RewardManager()
         reward_manager.add_message_event(
-            ["You kill the wumpus!", "You hit the wumpus!", "You miss the wumpus."],
+            [
+                "You kill the wumpus!",
+                "You hit the wumpus!",
+                "You miss the wumpus.",
+            ],
         )
 
         super().__init__(
@@ -205,7 +215,9 @@ class MiniHackSkillNavigateLava(MiniHackSkillTransfer):
         kwargs["actions"] = kwargs.pop("actions", COMMANDS)
 
         super().__init__(
-            *args, des_file="skill_transfer/skills/skill_navigate_lava.des", **kwargs
+            *args,
+            des_file="skill_transfer/skills/skill_navigate_lava.des",
+            **kwargs,
         )
 
 
@@ -341,7 +353,10 @@ class MiniHackSkillPutOn(MiniHackSkillTransfer):
 
         reward_manager = RewardManager()
         reward_manager.add_message_event(
-            ["- a ring of levitation", "You are now wearing a towel around your head."]
+            [
+                "- a ring of levitation",
+                "You are now wearing a towel around your head.",
+            ]
         )
 
         super().__init__(
@@ -381,7 +396,8 @@ class MiniHackSkillThrow(MiniHackSkillTransfer):
 
         reward_manager = RewardManager()
         reward_manager.add_message_event(
-            ["You kill the large mimic", "You kill the orc"], terminal_sufficient=True
+            ["You kill the large mimic", "You kill the orc"],
+            terminal_sufficient=True,
         )
 
         reward_manager.add_message_event(
@@ -515,7 +531,8 @@ registration.register(
 
 registration.register(
     id="MiniHack-Skill-Fight-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillFight",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillFight",
 )
 
 registration.register(
@@ -550,27 +567,32 @@ registration.register(
 
 registration.register(
     id="MiniHack-Skill-PickUp-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPickUp",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillPickUp",
 )
 
 registration.register(
     id="MiniHack-Skill-PutOn-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillPutOn",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillPutOn",
 )
 
 registration.register(
     id="MiniHack-Skill-TakeOff-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillTakeOff",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillTakeOff",
 )
 
 registration.register(
     id="MiniHack-Skill-Throw-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillThrow",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillThrow",
 )
 
 registration.register(
     id="MiniHack-Skill-Unlock-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillUnlock",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillUnlock",
 )
 
 registration.register(
@@ -580,7 +602,8 @@ registration.register(
 
 registration.register(
     id="MiniHack-Skill-Wield-v0",
-    entry_point="minihack.envs.skill_transfer.skills_all:" "MiniHackSkillWield",
+    entry_point="minihack.envs.skill_transfer.skills_all:"
+    "MiniHackSkillWield",
 )
 
 registration.register(

@@ -48,7 +48,7 @@ def main(flags: DictConfig):
                         skill_flags.env = skill
                         skill_flags.use_lstm = False
                         skill_flags.total_steps = 1e7
-                        skill_flags.wandb = False
+                        skill_flags.wandb = True
                         skill_flags.model = "baseline"
 
                         polyhydra.main(skill_flags)
