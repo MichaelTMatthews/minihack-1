@@ -48,9 +48,10 @@ The full list of skills to be trained is
 <li>mini_skill_zap_death
 </ul>
 
+So by the end of this, the SKILL_TRANSFER_HOME directory should contain a .tar file for each skill, as well as a skill_config.yaml file which reflects the training of the skills.
+
 <h2>Training on Tasks</h2>
 
-If the relevant skills for the environment are not present in SKILL_TRANSFER_HOME an error will be shown indicating which skill is missing.
 The skill transfer specific models are
 <ul>
   <li>foc: Options Framework</li>
@@ -75,6 +76,8 @@ So, for example, to run hierarchical kickstarting on the Target Practice environ
 python -m minihack.agent.polybeast.skill_transfer_polyhydra model=hks env=mini_simple_random
 ```
 With all other parameters being able to be set in the same way as with polyhydra.py
+
+If the relevant skills for the environment are not present in SKILL_TRANSFER_HOME an error will be shown indicating which skill is missing.
 
 
 <h2>Repeating experiments from diss</h2>
