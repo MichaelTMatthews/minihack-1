@@ -40,40 +40,9 @@ def main(flags: DictConfig):
                         print(
                             "Required skill",
                             skill,
-                            "not found in SKILL_TRANSFER_HOME, training "
-                            "an agent for this skill first.",
+                            "not found in SKILL_TRANSFER_HOME, aborting.",
                         )
-
-                        skill_flags = flags.copy()
-                        skill_flags.env = skill
-                        skill_flags.use_lstm = False
-                        skill_flags.total_steps = 1e7
-                        skill_flags.wandb = True
-                        skill_flags.model = "baseline"
-
-                        polyhydra.main(skill_flags)
-
-                        print("Finished training skill", skill)
-                        print("Copying network to SKILL_TRANSFER_HOME")
-
-                        shutil.copyfile("checkpoint.tar", skill_dir)
-
-                        print("Network copied, deleting saves.")
-
-                        for filename in os.listdir("."):
-                            file_path = os.path.join(".", filename)
-                            try:
-                                if os.path.isfile(file_path) or os.path.islink(
-                                    file_path
-                                ):
-                                    os.unlink(file_path)
-                                elif os.path.isdir(file_path):
-                                    shutil.rmtree(file_path)
-                            except Exception as e:
-                                print(
-                                    "Failed to delete %s. Reason: %s"
-                                    % (file_path, e)
-                                )
+                        quit(1)
 
                 print("All skills present, begin training on task.")
 
